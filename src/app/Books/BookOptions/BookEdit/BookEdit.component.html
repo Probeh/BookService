@@ -1,0 +1,67 @@
+<main class="mt-5 container">
+  <div class="animated fadeIn">
+    <div *ngIf="!this.createMode" class="alert alert-info fixed-top"><i class="fa fa-edit"></i> Edit Current Book</div>
+    <div *ngIf="this.createMode" class="alert alert-success fixed-top"><i class="fa fa-edit"></i> Create New Book</div>
+    <div class="row">
+
+      <div class="col-md-3">
+        <div class="row justify-content-center mb-3">
+          <img *ngIf="!this.createMode" src="{{this.bookItem?.volumeInfo.imageLinks.thumbnail}}" style="height: 250px;">
+          <img *ngIf=" this.createMode" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdAYsT9tW8TYirUm-msP4lWP7D4Ez4GHGwztoIKmBbt4-zHNFH">
+        </div>
+        <div>
+          <div class="mb-3"><button *ngIf="!this.createMode" [disabled]="booksForm.pristine || !this.canSubmit()" class="btn btn-success btn-block" (click)="this.saveChanges()"><i class="fa fa-save"></i> Save</button></div>
+          <div class="mb-3"><button *ngIf=" this.createMode" [disabled]="booksForm.pristine || !this.canSubmit()" class="btn btn-success btn-block" (click)="this.createBook()"><i class="fa fa-save"></i> Save</button></div>
+          <div class="mb-3"><button class="btn btn-danger btn-block" (click)="this.cancel()"><i class="fa fa-undo"></i> Cancel</button></div>
+        </div>
+      </div>
+
+      <div class="col-md-9">
+        <h4 *ngIf="!this.createMode" class="text-primary text-center">{{this.bookItem.volumeInfo.title | titlesplit | titlecase}}</h4>
+        <h4 *ngIf="this.createMode"  class="text-primary text-center">Create A New Book</h4>
+        <form [formGroup]="this.booksForm">
+          <div formGroupName="details" class="animated fadeIn">
+            <div class="mt-3 form-group row">
+              <label for="id" class="col-sm-3 col-md-2">Book ID:</label>
+              <div class="col-sm-9 col-md-10">
+                <input formControlName="id" type="text" class="form-control" id="id" readonly>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="title" class="col-sm-3 col-md-2">Title:</label>
+              <div class="col-sm-9 col-md-10">
+                <input formControlName="title" type="text" placeholder="Enter A Book Title:" class="form-control" id="title">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="published" class="col-sm-3 col-md-2">Published:</label>
+              <div class="col-sm-9 col-md-10">
+                <input *ngIf="!this.createMode"  formControlName="published" type="text" placeholder="Enter A Valid Publish Date ( dd/mm/yyyy )" class="published form-control" value="{{this.bookItem.volumeInfo.publishedDate | date: 'dd/MM/yyyy'}}" id="published">
+                <input *ngIf=" this.createMode"  formControlName="published" type="text" placeholder="Enter A Valid Publish Date ( dd/mm/yyyy )" class="published form-control" id="published">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="title" class="col-sm-3 col-md-2">Author:</label>
+              <div class="col-sm-9 col-md-10">
+                <input formControlName="author" placeholder="Enter An Author's Name:" type="text" class="form-control" id="title">
+              </div>
+            </div>
+          </div>
+          <div *ngIf="this.booksForm.get('details.title').touched && this.booksForm.get('details.title').hasError('Title Exists')" class="alert alert-danger animated fadeIn"><i class="fa fa-close"></i> The Requested Title Already Exists</div>
+          <div *ngIf="this.booksForm.get('details.title').touched && this.booksForm.get('details.title').hasError('required')" class="alert alert-danger animated fadeIn"><i class="fa fa-close"></i> The Title Field Is Required</div>
+          <div *ngIf="this.booksForm.get('details.author').touched && this.booksForm.get('details.author').hasError('required')" class="alert alert-danger animated fadeIn"><i class="fa fa-close"></i> The Author Field Is Required</div>
+          <div *ngIf="this.booksForm.get('details.published').touched && this.booksForm.get('details.published').hasError('required')" class="alert alert-danger animated fadeIn"><i class="fa fa-close"></i> The Published Field Is Required</div>
+          <div *ngIf=" this.createMode && this.booksForm.get('details.title').touched && this.booksForm.get('details.title').valid" class="alert alert-success animated fadeIn"><i class="fa fa-check"></i> Title Is Available</div>
+          <div *ngIf=" this.createMode && this.booksForm.get('details.published').touched && this.booksForm.get('details.published').hasError('pattern')" class="alert alert-danger animated fadeIn"><i class="fa fa-close"></i> Invalid Date Format, Please Try Again</div>
+          <div *ngIf="!this.createMode && this.booksForm.get('details.published').touched && this.booksForm.get('details.published').hasError('pattern') && this.booksForm.get('details.published').value != this.bookItem.volumeInfo.publishedDate" class="alert alert-danger animated fadeIn"><i class="fa fa-close"></i> Invalid Date Format, Please Try Again</div>
+          <div *ngIf="!this.createMode && this.booksForm.get('details.title').touched && this.booksForm.get('details.title').valid && this.booksForm.get('details.title').value != this.bookItem.volumeInfo.title" class="alert alert-success animated fadeIn"><i class="fa fa-check"></i> Title Is Available</div>
+
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+
+
+</main>

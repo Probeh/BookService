@@ -1,0 +1,10 @@
+main {
+  height: 500px;
+}
+.scrollable {
+  max-height: 400px;
+  overflow: hidden;
+}
+.scrollable:hover {
+  overflow-y: auto;
+}

@@ -1,0 +1,9 @@
+<ng-template #template>
+  <div class="modal-body">
+    <div [ngSwitch]="this.options.service">
+      <app-BookEdit *ngSwitchCase="0" [bookItem]="this.options.book" [createMode]=true  (closeModal)="this.closeModal()"></app-BookEdit>
+      <app-BookEdit *ngSwitchCase="1" [bookItem]="this.options.book" [createMode]=false (closeModal)="this.closeModal()"></app-BookEdit>
+      <app-BookDelete *ngSwitchCase="2" [bookItem]="this.options.book" (closeModal)="this.closeModal()"></app-BookDelete>
+    </div>
+  </div>
+</ng-template>

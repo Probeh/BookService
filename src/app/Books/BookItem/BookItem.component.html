@@ -1,0 +1,13 @@
+<div class="col-lg-2 col-md-4 col-sm-6">
+  <div class="card mb-4">
+    <div class="card-img-wrapper">
+      <img class="card-img-top" src="{{this.bookItem?.volumeInfo.imageLinks.smallThumbnail}}" style="height: 225px;">
+
+      <ul class="list-inline card-icons animate text-center">
+        <li class="list-inline-item" tooltip="View Profile" placement="left" container="body"><button class="btn btn-primary"><i class="fa fa-search-plus"></i></button></li>
+        <li class="list-inline-item" tooltip="Edit Book" placement="top" container="body"><button class="btn btn-primary" (click)="this.editBook()"><i class="fa fa-edit"></i></button></li>
+        <li class="list-inline-item" tooltip="Remove Item" placement="right" container="body"><button class="btn btn-primary" (click)="this.deleteBook()"><i class="fa fa-trash"></i></button></li>
+      </ul>
+    </div>
+  </div>
+</div>
